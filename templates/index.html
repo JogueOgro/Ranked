@@ -1,10 +1,11 @@
-\<!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="br">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Draft Rivvals</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.css') }}">
+    <title>{{ titulo }}</title>
+    <link rel="stylesheet" href="../static/bootstrap.css">
+    <link rel="stylesheet" href="../static/custom.css">
   </head>
   <body>
     <div class="container">
@@ -24,17 +25,52 @@
         <div class="page-header">
             <h1>{{ titulo }}</h1>
         </div>
-        <form action="/process_form" method="post">
-          <div class="form-group">
-            <label for="times">Nº de Times</label>
-            <input type="text" class="form-control" id="times" name="times" placeholder="Número de Times" value="32">
-          </div>
-          <div class="form-group">
-            <label for="jogo">Jogo</label>
-            <input type="text" class="form-control" id="jogo" name="jogo" placeholder="Nome do Jogo" value="Rocket League">
-          </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+        <div id="confronto">
+                <div class="row">
+                <a class="btn btn-primary" id="cb1">X</a><div id="player1"></div>
+                <div><img alt="versus" src="../static/img/vs.png"/></div>
+                <a class="btn btn-primary" id="cb2">X</a><div id="player2"></div>
+                <button class="btn btn-primary" id="enter" role="button" data-toggle="modal" data-target="#modalExemplo">Selecionar Vencedor</button>
+            </div>
+        </div>
+<!--        <div class="save">-->
+            <a class="btn btn-primary" id="save" role="button">Salvar Resultados</a>
+<!--        </div>-->
+        <h3>Escolha o confronto:</h3>
+        <table class="table table-striped table-responsive table-bordered table-hover" id="time">
+            <thead>
+                <tr>
+                    <th style="width: 25%">Nome</th>
+                    <th style="width: 25%">Rating</th>
+                    <th style="width: 25%">Forma</th>
+                    <th style="width: 25%">Conquistas</th>
+                </tr>
+            </thead>
+            <tbody id="tb_escolhas">
+                {% for jogador in jogadores  %}
+
+                            <tr>
+                                <td class="nome">{{ jogador.nome }}</td>
+                                <td>{{ jogador.rating }}</td>
+                                <td>{{ jogador.forma }}</td>
+                                <td>
+                                    {% for win in jogador.wins  %}
+                                        {% if win == "mj" %}
+                                        <img src="../static/img/trofeu.png" alt="1o lugar Major"/>
+                                        {% endif %}
+                                        {% if win == "mj2" %}
+                                        <img src="../static/img/trofeuprata.png" alt="1o lugar Major"/>
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+            {% endfor %}
+            <!--encerramos a estrutura de repetição-->
+            </tbody>
+        </table>
+        <a class="btn btn-primary" id="add" role="button">Adicionar Levvado</a>
     </div>
   </body>
+<script src="../static/jquery-3.7.0.min.js"></script>
+<script src="../static/functions.js"></script>
 </html>

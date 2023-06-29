@@ -1,36 +1,54 @@
-// Contador
-var segundos = 60;
-
-// Update a cada 1s
-var x = setInterval(function() {
-
-  segundos = segundos - 1;
-
-  // Display no elemnto timer
-  document.getElementById('timer').innerHTML = segundos + 's ';
-
-  // Quando acaba escreve que acabou
-  if (segundos < 0) {
-    clearInterval(x);
-    document.getElementById('timer').innerHTML = 'TEMPO ACABADO';
-  }
-}, 1000);
-
 $(document).ready(function() {
 
     $('tbody#tb_escolhas tr').click(function () {
         var tr = $(this).closest('tr').hide().clone();
-        tr.attr('id', 'chosen');
-        tr.show()
-        $('#time tbody').append(tr);
-        $('#selected_name').attr('value', tr.find('td.nome').text())
+        if ($('div#player1').html() == '') $('div#player1').html(tr.find('td.nome').text());
+        else if ($('div#player2').html() == '') {
+            $('div#player2').html(tr.find('td.nome').text());
+            $('button#enter').show();
+        }
+        else alert('Ambos os jogadores já foram selecionados. Finalize o desafio antes de iniciar um novo!');
     });
 
-    $('a#undo').click(function () {
-        var tr = $('tr#chosen').remove();
-        $('tbody#tb_escolhas tr').show()
-        $('#selected_name').attr('value', '')
+    $('#enter').click(function () {
+        $('#cb1').show();
+        $('#cb2').show();
+        $('#enter').hide();
     });
 
-    // $('.alert').delay(1000).hide('slow');
+    $('#cb1').hover(function () {
+            $(this).css("background-color","#6EA743");
+            $('#cb2').css("background-color","red");
+            $(this).html("V");
+            $('#cb2').html("D");
+        }, function () {
+            $(this).css("background-color","#337ab7");
+            $('#cb2').css("background-color","#337ab7");
+            $(this).html("X");
+            $('#cb2').html("X");
+        }
+    );
+
+            $('#cb2').hover(function () {
+            $(this).css("background-color","#6EA743");
+            $('#cb1').css("background-color","red");
+            $(this).html("V");
+            $('#cb1').html("D");
+        }, function () {
+            $(this).css("background-color","#337ab7");
+            $('#cb1').css("background-color","#337ab7");
+            $(this).html("X");
+            $('#cb1').html("X");
+        }
+    );
+
+    $('#cb1').click(function () {
+        alert('aa');
+    });
+
+    $('#cb2').click(function () {
+        alert('aa');
+    });
+
+
 });

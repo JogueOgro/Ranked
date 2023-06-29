@@ -1,0 +1,25 @@
+div.row div{
+    width: 25%;
+    display: inline-block;
+    text-align: center;
+}
+
+div.row {
+margin-left: 7px;
+}
+
+div.row div a {
+margin-right: 10px;
+}
+
+#cb1, #cb2 {
+    display: none;
+}
+
+button#enter, a#save {
+    display: none;
+}
+
+div.save {
+    margin-top: 22px;
+}
