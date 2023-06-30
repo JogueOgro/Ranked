@@ -27,10 +27,14 @@
         </div>
         <div id="confronto">
                 <div class="row">
-                <a class="btn btn-primary" id="cb1">X</a><div id="player1"></div>
+                <a class="btn btn-primary" id="cb1">X</a><div id="player1"></div><div id="delta1"></div>
+                <input type="hidden" class="form-control" id="nome1" name="nome1">
+                <input type="hidden" class="form-control" id="rating1" name="rating1">
                 <div><img alt="versus" src="../static/img/vs.png"/></div>
-                <a class="btn btn-primary" id="cb2">X</a><div id="player2"></div>
-                <button class="btn btn-primary" id="enter" role="button" data-toggle="modal" data-target="#modalExemplo">Selecionar Vencedor</button>
+                <a class="btn btn-primary" id="cb2">X</a><div id="player2"></div><div id="delta2"></div>
+                <input type="hidden" class="form-control" id="nome2" name="nome2">
+                <input type="hidden" class="form-control" id="rating2" name="rating2">
+                <button class="btn btn-primary" id="enter" role="button">Selecionar Vencedor</button>
             </div>
         </div>
 <!--        <div class="save">-->
@@ -51,7 +55,7 @@
 
                             <tr>
                                 <td class="nome">{{ jogador.nome }}</td>
-                                <td>{{ jogador.rating }}</td>
+                                <td class="rating">{{ jogador.rating }}</td>
                                 <td>{{ jogador.forma }}</td>
                                 <td>
                                     {% for win in jogador.wins  %}
@@ -68,7 +72,7 @@
             <!--encerramos a estrutura de repetição-->
             </tbody>
         </table>
-        <a class="btn btn-primary" id="add" role="button">Adicionar Levvado</a>
+        <a class="btn btn-primary" id="add" href="/add" role="button">Adicionar Levvado</a>
     </div>
   </body>
 <script src="../static/jquery-3.7.0.min.js"></script>
