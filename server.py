@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
+from datetime import datetime
 import shelve
 
 app = Flask(__name__)
@@ -10,6 +11,11 @@ try:
     jogadores = shelve_file['jogadores']
 except:
     jogadores = []
+
+try:
+    audits = shelve_file['audits']
+except:
+    audits = []
 
 @app.route('/')
 def index():
@@ -42,11 +48,33 @@ def get_post_javascript_data():
     for jogador in jogadores:
         if jogador['nome'] == vencedor:
             jogador['rating'] = int(jogador['rating']) + int(delta)
+            ratingv = jogador['rating']
+            forma = jogador['forma']
+            if forma == '':
+                jogador['forma'] = 'V'
+            else:
+                forma = forma+'-V'
+                jogador['forma'] = forma[-9:]
         if jogador['nome'] == perdedor:
             jogador['rating'] = int(jogador['rating']) - int(delta)
+            ratingp = jogador['rating']
+            forma = jogador['forma']
+            if forma == '':
+                jogador['forma'] = 'D'
+            else:
+                forma = forma+'-D'
+                jogador['forma'] = forma[-9:]
 
+    audit = {'vencedor': vencedor, 'ratingv': ratingv, 'perdedor': perdedor, 'ratingp': ratingp, 'delta': delta, 'horario': datetime.now().strftime("%d/%m/%Y, %H:%M:%S")}
+    audits.append(audit)
+    shelve_file['audits'] = audits
     shelve_file['jogadores'] = jogadores
     return redirect(url_for('index'))
+
+@app.route('/admin',)
+def admin():
+    audits = shelve_file['audits']
+    return render_template('auditoria.html', titulo='Administração', audits=audits)
 
 def get_rating(jogador):
     return int(jogador['rating'])

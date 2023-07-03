@@ -6,6 +6,7 @@ $(document).ready(function() {
             $('div#player1').html(tr.find('td.nome').text());
             $('input#nome1').attr('value', tr.find('td.nome').text())
             $('input#rating1').attr('value', tr.find('td.rating').text())
+            $('a#clear').show()
         }
 
         else if ($('div#player2').html() == '') {
@@ -21,6 +22,18 @@ $(document).ready(function() {
         $('#cb1').show();
         $('#cb2').show();
         $('#enter').hide();
+    });
+
+    $('a#clear').click(function () {
+        if (confirm('Quer mesmo cancelar esta partida?')) {
+        $('div#player1').html('');
+        $('div#player2').html('');
+        $('tbody#tb_escolhas tr').show();
+        $('#cb1').hide();
+        $('#cb2').hide();
+        $('#enter').hide();
+        $('a#clear').hide();
+        }
     });
 
     $('#cb1').hover(function () {
