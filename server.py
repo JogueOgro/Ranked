@@ -17,6 +17,8 @@ try:
 except:
     audits = []
 
+shelve_file.close()
+
 @app.route('/')
 def index():
     global jogadores
@@ -35,7 +37,9 @@ def processar_add():
         return redirect(url_for('adicionar'))
     new_player = {'nome': nome, 'rating': '1000',  'forma': '', 'wins': []}
     jogadores.append(new_player)
+    shelve_file = shelve.open('pingpong')
     shelve_file['jogadores'] = jogadores
+    shelve_file.close()
     return redirect(url_for('index'))
 
 @app.route('/post_results', methods = ['GET', 'POST'])
@@ -67,13 +71,17 @@ def get_post_javascript_data():
 
     audit = {'vencedor': vencedor, 'ratingv': ratingv, 'perdedor': perdedor, 'ratingp': ratingp, 'delta': delta, 'horario': datetime.now().strftime("%d/%m/%Y, %H:%M:%S")}
     audits.append(audit)
+    shelve_file = shelve.open('pingpong')
     shelve_file['audits'] = audits
     shelve_file['jogadores'] = jogadores
+    shelve_file.close()
     return redirect(url_for('index'))
 
 @app.route('/admin',)
 def admin():
+    shelve_file = shelve.open('pingpong')
     audits = shelve_file['audits']
+    shelve_file.close()
     return render_template('auditoria.html', titulo='Administração', audits=audits)
 
 def get_rating(jogador):
