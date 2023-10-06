@@ -87,4 +87,4 @@ def admin():
 def get_rating(jogador):
     return int(jogador['rating'])
 
-app.run(debug=True, port=81)
+app.run(debug=True, port=5001)
